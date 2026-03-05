@@ -45,8 +45,7 @@ This section provides **high-level guidance** on setting up and using the home l
 ## Repository Contents
 
 - `README.md` — Project documentation
-- `setup.sh` *(optional)* — Script for automated Docker container deployment 
-- `screenshots/` *(optional)* — Visual overview of the Jellyfin and Portainer interfaces 
+- `setup.sh` — Script for automated Docker container deployment 
 
 ---
 
