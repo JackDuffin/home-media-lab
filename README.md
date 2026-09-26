@@ -1,59 +1,55 @@
- Home Media Lab — Dockerized Jellyfin
+# Home Media Lab — Dockerized Jellyfin
 
-This repository documents my personal **home media lab**, showcasing skills in **Linux system administration, Docker containerization, and home server management**. 
-It demonstrates a fully containerized media server environment that is accessible across multiple devices.
+A first hands-on project with Docker and a Linux home server: an old laptop running Ubuntu that hosts a Jellyfin media server in a Docker container, streaming to other devices on my home network.
 
 ---
 
-## System Overview
+## Setup
 
-- **Laptop Specs:** [,Lenovo Lenovo ideapad 310-15ISK,Intel® Core™ i3-6006U × 4, 12GB RAM] 
-- **Operating System:** Linux [Ubuntu 24.04.4 LTS]
-- **Docker:** Containerized services for media management 
-- **Media Folders:**
-  - `/media/movies` → Movies
-  - `/media/shows` → TV Shows 
+- **Hardware:** Lenovo IdeaPad 310-15ISK (Intel Core i3-6006U, 12GB RAM)
+- **OS:** Ubuntu 24.04.4 LTS
 - **Services:**
-  - **Jellyfin** — Media server with persistent storage and multi-device streaming 
-  - **Portainer** — Optional Docker management UI for container oversight
+  - **Jellyfin**: media server, running in Docker
+  - **Portainer** (optional): web UI for managing Docker containers
+- **Media folders:**
+  - `/media/movies`: movies
+  - `/media/shows`: TV shows
 
 ---
 
-## Features
+## What it does
 
-- **Multi-Device Access:** Stream movies and shows on any device connected to the local network 
-- **Persistent Storage:** Media and server settings are stored separately for safe, long-term usage 
-- **Multi-User Support:** Admin account with additional restricted user accounts for family members or guests 
-- **Home Lab Skills Demonstrated:** Linux administration, Docker container management, media server deployment, networked services
-
----
-
-## Instruction Notes
-
-This section provides **high-level guidance** on setting up and using the home lab:
-
-- **Media Organization:** Keep movies and shows in separate folders (`/media/movies` and `/media/shows`) for easier library management in Jellyfin.
-- **Docker Deployment:** Use Docker to run Jellyfin in a container for isolation, portability, and easier updates.
-- **Persistent Storage:** Use Docker volumes to store configuration, library metadata, and user data separately from media files to prevent data loss. 
-- **Network Access:** The Jellyfin server can be accessed from other devices on the same network using the laptop’s local IP. 
-- **Multi-User Accounts:** Create non-admin users in Jellyfin to allow family members to access media without administrative privileges.
-- **Optional Management UI:** Portainer can be used to visually monitor and manage all Docker containers on the laptop. 
-- **Permissions:** Ensure media folders are readable by Docker and the Jellyfin container to avoid library scanning errors. 
+- Streams movies and shows to any device on the local network
+- Keeps Jellyfin's config and metadata in a Docker volume, separate from the media files, so the container can be updated or recreated without losing settings
+- Has an admin account plus restricted user accounts for family members
 
 ---
 
-## Repository Contents
+## Running it
 
-- `README.md` — Project documentation
-- `setup.sh` — Script for automated Docker container deployment 
+1. Install Docker on the host and create the media folders:
+```bash
+   sudo mkdir -p /media/movies /media/shows
+```
+2. Run the setup script:
+```bash
+   chmod +x setup.sh
+   ./setup.sh
+```
+3. Open `http://<laptop-local-ip>:8096` from any device on the network and follow Jellyfin's setup wizard.
 
 ---
 
-## CV / Portfolio Notes
+## Notes
 
-This project demonstrates practical experience with: 
+- Keep movies and shows in separate folders so Jellyfin detects the library types correctly.
+- The media folders need to be readable by the container, or library scans will fail.
+- Create non-admin Jellyfin users for anyone who only needs to watch.
+- `setup.sh` uses `--restart=always`, so Jellyfin starts again automatically after a reboot.
 
-- Linux system administration and file permissions 
-- Docker containerization and volume management 
-- Deploying and managing a network-accessible media server 
-- Multi-device and multi-user home lab setup
+---
+
+## Repository contents
+
+- `README.md`: this file
+- `setup.sh`: creates the config volume and starts the Jellyfin container
